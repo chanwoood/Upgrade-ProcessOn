@@ -20,7 +20,7 @@
 
 ## 编程思路
 
-1. 先来看看注册表单
+### 1. 先来看看注册表单
 
 ![注册](https://upload-images.jianshu.io/upload_images/5690299-892570595b743eed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
@@ -34,13 +34,13 @@
 
 需要注意网站通过 cookies 识别出邀请链接，所以在提交表单前需要 get(邀请链接url)，再 post 提交表单，两次请求在同一个 session，这样才能共享 cookies 。
 
-2. 更改 temp mail 邮箱
+### 2. 更改 temp mail 邮箱
 
 ![更改邮箱表单](https://upload-images.jianshu.io/upload_images/5690299-75166eb422410257.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 抓包发现：post 表单数据需要 csrf 字段。所以 post 前先用 get 方法，从响应中提取 csrf 字段值。
 
-3. 获取注册验证链接
+### 3. 获取注册验证链接
 
 这步比较简单，在 temp mail 的「刷新」标签获取到邮件，get 请求进去，在中响应中提取出注册验证链接，最后请求注册验证链接即可。
 
