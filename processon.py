@@ -1,7 +1,14 @@
 import random
 import re
 import time
+import argparse
+
 import requests
+
+parser = argparse.ArgumentParser()
+parser.add_argument('url')
+args = parser.parse_args()
+url = args.url
 
 def getuser():
 
@@ -30,10 +37,10 @@ def getdomain():
 	return domain
 	
 	
-def po(user, domain):
+def po(user, domain, url):
 
 	ss_po = requests.Session()
-	ss_po.get('https://www.processon.com/i/5ad16f4be4b0518eacae31fb')
+	ss_po.get(url)
 
 	fullname = str(random.randint(1000000, 9999999))
 	password = str(random.randint(1000000, 9999999))
@@ -91,6 +98,6 @@ if __name__ == "__main__":
 		user = getuser()
 		domain = getdomain()
 		
-		po(user, domain)
+		po(user, domain, url)
 		mail(user, domain)
 	
