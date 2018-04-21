@@ -6,6 +6,23 @@
 
 但是，它是付费的，免费用户只能存放 9 个文件。
 
+本程序实现自动增加你的文件数量，理论上可以无限增加，哈哈。
+
+## 用法
+
+
+### 不用科学上网版本
+
+- 下载 v2.0 版本
+
+- 安装依赖 requests、bs4。
+
+- 在你的 processon 的账号中心找到邀请链接 url。
+
+- 运行脚本 python processon.py url 。此处 url 是你的邀请链接。
+
+![用法示例](https://upload-images.jianshu.io/upload_images/5690299-b0cad67e1b8c6e36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 ## 扩充文件数思路
 
 我发现在用户的账号中心有这样的东西：
@@ -52,4 +69,5 @@
 
 我抓取 cn-proxy 页面的 IP 代理并存储在 sqlite3 中，每次请求时从数据库中随机取出一个代理，先验证代理是否有效，如果失效就删除数据库的这条记录，再取，直至有效。
 
-无法科学上网的同学，使用 release v1.0，但这样注册十个账号左右后会封 IP 十分钟。
+无法科学上网的同学，使用 release v2.0，但这样注册十个账号左右后会封 IP 十分钟。
+
