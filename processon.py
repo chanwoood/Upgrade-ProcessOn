@@ -3,49 +3,94 @@ import re
 import time
 import requests
 
-user = str(random.randint(1000000, 9999999))
+def getuser():
 
-
-ss = requests.Session()
-rr = ss.get('https://www.processon.com/i/5ad16f4be4b0518eacae31fb')
-
-
-processon = {
-	'email': user + '@carbtc.net',
-	'pass': str(random.randint(1000000, 9999999)),
-	'fullname': str(random.randint(1000000, 9999999))
-}
-
-rsp_po = ss.post('https://www.processon.com/signup/submit', data=processon)
-
-print("register code: {}\nuser: {}".format(rsp_po.status_code, user))
-
-
-s = requests.Session()
-rsp_g = s.get('https://temp-mail.org/zh/option/change/')
-csrf = re.findall(r'name="csrf" value="(\w+)', rsp_g.text)[0]
-
-data = {
-	'csrf': csrf,
-	'mail': user,
-	'domain': '@carbtc.net'
-}
-
-rsp_p = s.post('https://temp-mail.org/zh/option/change/', data=data)
-if rsp_p.status_code == 200:
-	print('email: {}@carbtc.net'.format(user))
-else:
-	print('change email false')
+	user = str(random.randint(1000000, 9999999))
 	
-rsp_refresh = s.get('https://temp-mail.org/zh/option/refresh/')
-url_box = re.findall(r'https://temp-mail.org/zh/view/\w+', rsp_refresh.text)
-while url_box == []:
-	time.sleep(1)
-	rsp_refresh = s.get('https://temp-mail.org/zh/option/refresh/')
+	return user
+
+def getdomain():
+
+	domains = [
+		"@carbtc.net",
+		"@2ether.net",
+		"@eth2btc.info",
+		"@web2mailco.com",
+		"@1webmail.info",
+		"@mailtrix.net",
+		"@twocowmail.net",
+		"@one2mail.info",
+		"@uemail99.com",
+		"@emailure.net",
+		"@emailsy.info",
+	]
+	
+	domain = random.choice(domains)
+	
+	return domain
+	
+	
+def po(user, domain):
+
+	ss_po = requests.Session()
+	ss_po.get('https://www.processon.com/i/5ad16f4be4b0518eacae31fb')
+
+	fullname = str(random.randint(1000000, 9999999))
+	password = str(random.randint(1000000, 9999999))
+
+	
+
+	processon = {
+		'email': user + domain,
+		'pass': password,
+		'fullname': fullname
+	}
+
+	rsp_po = ss_po.post('https://www.processon.com/signup/submit', data=processon)
+
+	fmt = "\nemail: {}\npassword: {}\nnickname: {}\n"
+	print(fmt.format(processon.get('email'), password, fullname))
+
+
+def mail(user, domain):
+
+	ss_mail = requests.Session()
+	rsp_get = ss_mail.get('https://temp-mail.org/zh/option/change/')
+	csrf = re.findall(r'name="csrf" value="(\w+)', rsp_get.text)[0]
+
+	tempmail = {
+		'csrf': csrf,
+		'mail': user,
+		'domain': domain
+	}
+
+	ss_mail.post('https://temp-mail.org/zh/option/change/', data=tempmail)
+		
+	rsp_refresh = ss_mail.get('https://temp-mail.org/zh/option/refresh/')
 	url_box = re.findall(r'https://temp-mail.org/zh/view/\w+', rsp_refresh.text)
+	while url_box == []:
+		time.sleep(1)
+		rsp_refresh = ss_mail.get('https://temp-mail.org/zh/option/refresh/')
+		url_box = re.findall(r'https://temp-mail.org/zh/view/\w+', rsp_refresh.text)
+		
+	rsp_message = ss_mail.get(url_box[0])
+	url_verify = re.findall(r'https://www.processon.com/signup/verification/\w+', rsp_message.text)[0]
+	rsp_verify = ss_mail.get(url_verify)
 	
-rsp_message = s.get(url_box[0])
+	global num
+	
+	if rsp_verify.status_code == 200:
+		num += 1
+		print('Number of successes：{}'.format(num))
+		
+num = 0
 
-url = re.findall(r'https://www.processon.com/signup/verification/\w+', rsp_message.text)[0]
-r = s.get(url)
-print('verification url status code: {}'.format(r.status_code))
+if __name__ == "__main__":
+	
+	while True:
+		user = getuser()
+		domain = getdomain()
+		
+		po(user, domain)
+		mail(user, domain)
+	
