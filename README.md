@@ -8,6 +8,11 @@
 
 本程序实现自动增加你的文件数量，理论上可以无限增加，哈哈。
 
+效果图：
+
+![效果图](https://upload-images.jianshu.io/upload_images/5690299-07594fd37eda1f83.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+增加到 100 个左右就够了，不要搞太多，以免引起官方注意。
 请低调使用，不要涉及商业行为。
 
 ## 用法
@@ -35,9 +40,9 @@
 
 - 运行脚本 python processon.py url 。此处 url 是你的邀请链接。
 
-- 毕竟是免费代理，效果不太理想。
+- 毕竟是免费代理，效果不太理想。并且验证代理是否有效消耗较多时间。
 
-![用法示例](https://upload-images.jianshu.io/upload_images/5690299-4aba239ed84c57b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![用法示例](https://upload-images.jianshu.io/upload_images/5690299-d96b7d8673ca9c94.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ## 扩充文件数思路
 
@@ -86,4 +91,3 @@
 我抓取 cn-proxy 页面的 IP 代理并存储在 sqlite3 中，每次请求时从数据库中随机取出一个代理，先验证代理是否有效，如果失效就删除数据库的这条记录，再取，直至有效。
 
 无法科学上网的同学，使用 release v2.0，但这样注册十个账号左右后会封 IP 十分钟。
-
