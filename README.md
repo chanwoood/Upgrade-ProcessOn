@@ -8,6 +8,8 @@
 
 本程序实现自动增加你的文件数量，理论上可以无限增加，哈哈。
 
+请低调使用，不要涉及商业行为。
+
 ## 用法
 
 
@@ -15,13 +17,27 @@
 
 - 下载 v2.0 版本
 
-- 安装依赖 requests、bs4。
+- 安装依赖 requests 。
 
 - 在你的 processon 的账号中心找到邀请链接 url。
 
 - 运行脚本 python processon.py url 。此处 url 是你的邀请链接。
 
 ![用法示例](https://upload-images.jianshu.io/upload_images/5690299-b0cad67e1b8c6e36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+### 需要科学上网版本
+
+- 下载 v3.0 版本。
+
+- 安装依赖 requests、bs4、fake_useragent。
+
+- 运行 python proxy.py 。爬取代理并存储到 proxy.db 中。
+
+- 运行脚本 python processon.py url 。此处 url 是你的邀请链接。
+
+- 毕竟是免费代理，效果不太理想。
+
+![用法示例](https://upload-images.jianshu.io/upload_images/5690299-4aba239ed84c57b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ## 扩充文件数思路
 
