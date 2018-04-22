@@ -79,9 +79,7 @@ def mail(user, domain):
     rsp_message = ss_mail.get(url_box[0])
     url_verify = re.findall(
         r"https://www.processon.com/signup/verification/\w+", rsp_message.text
-    )[
-        0
-    ]
+    )[0]
     rsp_verify = ss_mail.get(url_verify)
 
     global num
