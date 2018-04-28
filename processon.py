@@ -1,17 +1,22 @@
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import random
 import re
 import time
-import requests
 import argparse
 
-import proxy
+import requests
+from bs4 import BeautifulSoup
 
 
+
+domains = []
+count = 0
+
+# url = "https://www.processon.com/i/5ad16f4be4b0518eacae31fb"
 parser = argparse.ArgumentParser()
 parser.add_argument("url")
 args = parser.parse_args()
 url = args.url
-
 
 def getuser():
 
@@ -21,44 +26,32 @@ def getuser():
 
 
 def getdomain():
-    domains = [
-        "@aditus.info",
-        "@storiqax.com",
-        "@air2token.com",
-        "@b2bx.net",
-        "@stelliteop.info",
-        "@bitwhites.top",
-        "@ethersportz.info",
-        "@2odem.com",
-        "@storiqax.top",
-        "@gifto12.com",
-    ]
+    global domains
+    if domains == []:
+        r = requests.get("https://temp-mail.org/en/option/change/")
+        soup = BeautifulSoup(r.text, "lxml")
+        domains = [tag.text for tag in soup.find(id="domain").find_all("option")]
+    return random.choice(domains)
 
 
-    domain = random.choice(domains)
-
-    return domain
-
-
-def po(user, domain, proxies, url):
+def po(user, domain, url):
 
     ss_po = requests.Session()
-    ss_po.get(url, proxies=proxies)
+    ss_po.get(url)
 
     fullname = str(random.randint(1000000, 9999999))
     password = str(random.randint(1000000, 9999999))
 
     processon = {"email": user + domain, "pass": password, "fullname": fullname}
 
-    rsp_po = ss_po.post(
-        "https://www.processon.com/signup/submit", data=processon, proxies=proxies
-    )
+    rsp_po = ss_po.post("https://www.processon.com/signup/submit", data=processon)
 
     fmt = "\nemail: {}\npassword: {}\nnickname: {}\n"
     print(fmt.format(processon.get("email"), password, fullname))
 
 
 def mail(user, domain):
+    global count
 
     ss_mail = requests.Session()
     rsp_get = ss_mail.get("https://temp-mail.org/zh/option/change/")
@@ -78,25 +71,22 @@ def mail(user, domain):
     rsp_message = ss_mail.get(url_box[0])
     url_verify = re.findall(
         r"https://www.processon.com/signup/verification/\w+", rsp_message.text
-    )[0]
-    rsp_verify = ss_mail.get(url_verify)
-
-    global num
+    )
+    rsp_verify = ss_mail.get(url_verify[0])
 
     if rsp_verify.status_code == 200:
-        num += 1
-        print("Number of successes：{}".format(num))
+        count += 1
+        print("{}@{} 成功! 【共成功{}次】".format(user, domain, count))
 
 
-num = 0
+def make(user):
+    domain = getdomain()
+    po(user, domain, url)
+    mail(user, domain)
+
 
 if __name__ == "__main__":
 
-    while True:
-        user = getuser()
-        domain = getdomain()
-
-        proxies = proxy.get()
-
-        po(user, domain, proxies, url)
-        mail(user, domain)
+    with ThreadPoolExecutor(max_workers=4) as executor:
+        users = [getuser() for i in range(100)]
+        executor.map(make, users)

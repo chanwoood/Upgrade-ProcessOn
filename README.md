@@ -17,32 +17,17 @@
 
 ## 用法
 
+- 安装依赖: pip install requests bs4 
 
-### 不用科学上网版本
-
-- 下载 v2.0 版本
-
-- 安装依赖 requests 。
-
-- 在你的 processon 的账号中心找到邀请链接 url。
+- 在你的 processon 的账号中心找到你的邀请链接 url。
 
 - 运行脚本 python processon.py url 。此处 url 是你的邀请链接。
 
-![用法示例](https://upload-images.jianshu.io/upload_images/5690299-b0cad67e1b8c6e36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+- 效果图：
 
-### 需要科学上网版本
+![效果图](https://upload-images.jianshu.io/upload_images/5690299-1235dc17a96262d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
-- 下载 v3.0 版本。
 
-- 安装依赖 requests、bs4、fake_useragent。
-
-- 运行 python proxy.py 。爬取代理并存储到 proxy.db 中。
-
-- 运行脚本 python processon.py url 。此处 url 是你的邀请链接。
-
-- 毕竟是免费代理，效果不太理想。并且验证代理是否有效消耗较多时间。
-
-![用法示例](https://upload-images.jianshu.io/upload_images/5690299-d96b7d8673ca9c94.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ## 扩充文件数思路
 
@@ -84,10 +69,10 @@
 
 需要注意的是注册验证邮件 temp mail 不一定马上就能收到，所以我写了个死循环，不断检测是否收到邮件，当收到邮件时才跳出。
 
-### 4. IP 代理池
+### 4. 大更新
 
-实测发现 processon 封多次连续注册的 IP，所以需要一个 IP 代理池，我用的是 [http://cn-proxy.com/](http://cn-proxy.com/) ,但是只要需要科学上网。
+发现多次注册封 IP 的情况并不严重，而使用所谓的免费代理反而带来一堆问题。所以不再使用 IP 代理。
 
-我抓取 cn-proxy 页面的 IP 代理并存储在 sqlite3 中，每次请求时从数据库中随机取出一个代理，先验证代理是否有效，如果失效就删除数据库的这条记录，再取，直至有效。
+由于网站邮箱域名经常更改，所以不再写死邮箱域名，而是每次启动脚本时把邮箱域名爬下来。
 
-无法科学上网的同学，使用 release v2.0，但这样注册十个账号左右后会封 IP 十分钟。
+引入多线程，大大提高爬取速度。
