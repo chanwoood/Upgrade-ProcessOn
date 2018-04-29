@@ -29,7 +29,7 @@ def getdomain():
     global domains
     if domains == []:
         r = requests.get("https://temp-mail.org/en/option/change/")
-        soup = BeautifulSoup(r.text, "lxml")
+        soup = BeautifulSoup(r.text, "html.parser")
         domains = [tag.text for tag in soup.find(id="domain").find_all("option")]
     return random.choice(domains)
 
