@@ -10,7 +10,7 @@
 
 效果图：
 
-![效果图](https://upload-images.jianshu.io/upload_images/5690299-07594fd37eda1f83.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![效果图](https://cdn.yuque.com/yuque/0/2018/gif/104735/1532043625192-f6540084-6bfb-4493-8920-822491a2d04e.gif)
 
 增加到 100 个左右就够了，不要搞太多，以免引起官方注意。
 请低调使用，不要涉及商业行为。
