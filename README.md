@@ -15,17 +15,25 @@
 增加到 100 个左右就够了，不要搞太多，以免引起官方注意。
 请低调使用，不要涉及商业行为。
 
+--------------
+
+三个月后，果然引起官方注意，现在注册时，需要通过[腾讯验证码](https://007.qq.com/online.html?ADTAG=capt.head)。
+
+没有找到完美的解决方案。
+
+目前，用  selenium 模拟注册时，需要手动滑动验证码。
+
+但是，这腾讯滑动验证码很智能：同一IP，短时间内，连续 4 次注册后，就无法通过验证码了。所以，必须引入 IP 代理池（目前没引入）。
+
 ## 用法
 
-- 安装依赖: pip install requests bs4 
-
+- 安装依赖: pip install requests bs4 selenium
+- 将项目中的 chromedriver.exe 放到你的 Python 安装目录下的 Script 文件夹中。
 - 在你的 processon 的账号中心找到你的邀请链接 url。
-
-- 运行脚本 python processon.py url 。此处 url 是你的邀请链接。
-
+- 运行脚本 python processon.py 。
 - 效果图：
 
-![效果图](https://upload-images.jianshu.io/upload_images/5690299-1235dc17a96262d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![pic.gif](https://upload-images.jianshu.io/upload_images/5690299-2b37f3a61c45fc34.gif?imageMogr2/auto-orient/strip)
 
 
 
@@ -50,12 +58,10 @@
 用户名我用随机生成的 7 位数加上邮箱后缀，密码、昵称都是随机产生的 7 位数。
 
 ```python
-'email': user + domain,
-'pass': str(random.randint(1000000, 9999999)),
-'fullname': str(random.randint(1000000, 9999999))
+user = str(random.randint(1000000, 9999999))
+fullname = str(random.randint(1000000, 9999999))
+password = str(random.randint(1000000, 9999999))
 ```
-
-需要注意网站通过 cookies 识别出邀请链接，所以在提交表单前需要 get(邀请链接url)，再 post 提交表单，两次请求在同一个 session，这样才能共享 cookies 。
 
 ### 2. 更改 temp mail 邮箱
 
@@ -69,10 +75,8 @@
 
 需要注意的是注册验证邮件 temp mail 不一定马上就能收到，所以我写了个死循环，不断检测是否收到邮件，当收到邮件时才跳出。
 
-### 4. 大更新
+### 4. 存在问题
 
-发现多次注册封 IP 的情况并不严重，而使用所谓的免费代理反而带来一堆问题。所以不再使用 IP 代理。
+速度太慢了，而且需要手动验证腾讯滑动验证码。
 
-由于网站邮箱域名经常更改，所以不再写死邮箱域名，而是每次启动脚本时把邮箱域名爬下来。
-
-引入多线程，大大提高爬取速度。
+连续第 4 次注册之后，这个 ip 就暂时无法通过验证码（这个，引入 IP 代理池后，应该得到解决）。

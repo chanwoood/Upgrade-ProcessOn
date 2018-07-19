@@ -1,22 +1,17 @@
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
 import random
 import re
 import time
-import argparse
 
 import requests
 from bs4 import BeautifulSoup
+from captcha import Crack
 
 
 
 domains = []
 count = 0
 
-# url = "https://www.processon.com/i/5ad16f4be4b0518eacae31fb"
-parser = argparse.ArgumentParser()
-parser.add_argument("url")
-args = parser.parse_args()
-url = args.url
 
 def getuser():
 
@@ -35,19 +30,14 @@ def getdomain():
 
 
 def po(user, domain, url):
-
-    ss_po = requests.Session()
-    ss_po.get(url)
-
     fullname = str(random.randint(1000000, 9999999))
     password = str(random.randint(1000000, 9999999))
+    # url, email, psw, name
+    crack = Crack(url, user + domain, password, fullname)
+    crack.open()
 
-    processon = {"email": user + domain, "pass": password, "fullname": fullname}
-
-    rsp_po = ss_po.post("https://www.processon.com/signup/submit", data=processon)
-
-    fmt = "\nemail: {}\npassword: {}\nnickname: {}\n"
-    print(fmt.format(processon.get("email"), password, fullname))
+    fmt = "\nemail: {}"
+    print(fmt.format(user + domain))
 
 
 def mail(user, domain):
@@ -86,7 +76,7 @@ def make(user):
 
 
 if __name__ == "__main__":
-
-    with ThreadPoolExecutor(max_workers=4) as executor:
-        users = [getuser() for i in range(100)]
-        executor.map(make, users)
+    # url = "https://www.processon.com/i/5ad16f4be4b0518eacae31fb"
+    url = input("请输入你的邀请链接：")
+    for i in range(100):
+        make(getuser())
