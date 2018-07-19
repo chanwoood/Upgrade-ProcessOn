@@ -10,7 +10,7 @@
 
 效果图：
 
-![效果图](https://cdn.yuque.com/yuque/0/2018/gif/104735/1532043625192-f6540084-6bfb-4493-8920-822491a2d04e.gif)
+![pic.gif](https://upload-images.jianshu.io/upload_images/5690299-dccea23b5bc05529.gif?imageMogr2/auto-orient/strip)
 
 增加到 100 个左右就够了，不要搞太多，以免引起官方注意。
 请低调使用，不要涉及商业行为。
@@ -31,11 +31,6 @@
 - 将项目中的 chromedriver.exe 放到你的 Python 安装目录下的 Script 文件夹中。
 - 在你的 processon 的账号中心找到你的邀请链接 url。
 - 运行脚本 python processon.py 。
-- 效果图：
-
-![pic.gif](https://upload-images.jianshu.io/upload_images/5690299-2b37f3a61c45fc34.gif?imageMogr2/auto-orient/strip)
-
-
 
 ## 扩充文件数思路
 
